@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>Leaflet Map Test</title>
 
     <!--Leaflet libraries-->
@@ -21,14 +22,15 @@
 </head>
 <body>
 
-<div class="content">
-    <div id="map"></div>
-</div>
+<ui-view></ui-view>
 
 <!--jQuery Library-->
 <script type="text/javascript" src="./assets/jquery/jquery-3.1.1.min.js"></script>
 
 <!--My Libraries-->
-<script type="text/javascript" src="./app/app.js"></script>
+<script type="text/javascript" src="./app/app.module.js"></script>
+<script type="text/javascript" src="./app/app.routes.js"></script>
+
+<script type="text/javascript" src="./app/maps/maps.controller.js"></script>
 </body>
 </html>
