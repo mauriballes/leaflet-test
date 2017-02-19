@@ -35,6 +35,14 @@ include "requests.php";
             margin-right: 5%;
             text-align: center;
         }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding-left: 25px;
+            padding-right: 25px;
+            text-align: center;
+        }
     </style>
 
 </head>
@@ -51,9 +59,20 @@ include "requests.php";
     <input type="text" id="lat" name="lat" placeholder="Latitud">
     <label for="lon">Longitud</label>
     <input type="text" id="lon" name="lon" placeholder="Longitud">
-    <input type="hidden" name="method" value="CREATE">
+    <input type="hidden" name="method" value="CREATE_TRACK">
     <input type="submit">
 </form>
+<div class="content">
+<table id="mytable">
+    <tr>
+        <th>Id</th>
+        <th>Latitud</th>
+        <th>Longitud</th>
+        <th>User Id</th>
+    </tr>
+    <?php buildTable() ?>
+</table>
+</div>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="./js/action.js"></script>
