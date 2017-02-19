@@ -5,7 +5,7 @@ use maps_test;
 set foreign_key_checks = 0;
 
 create table track (
-  id int not null,
+  id int not null auto_increment,
   lat double not null,
   lon double not null,
   user_id int not null,
