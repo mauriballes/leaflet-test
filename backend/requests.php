@@ -3,15 +3,25 @@
  * File to receive requests
  */
 
+header("Access-Control-Allow-Origin: *");
+
 $conn = null;
 
 include "config.php";
 
 // Router
 if(isset($_POST['method'])){
+    // For backend
     switch ($_POST['method']){
         case 'CREATE_TRACK':
             insertNewTrack();
+            break;
+    }
+}elseif (isset($_REQUEST['method'])){
+    // for angular
+    switch ($_REQUEST['method']){
+        case 'GET_USERS':
+            echo json_encode(getUsers());
             break;
     }
 }
@@ -27,6 +37,15 @@ function insertNewTrack(){
         ':lon' => $_POST['lon'],
         ':user_id' => $_POST['user_id']
     ]);
+}
+
+function getUsers(){
+    global $conn;
+
+    $stmt = $conn->query('SELECT * FROM maps_test.user');
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $results;
 }
 
 // Utils

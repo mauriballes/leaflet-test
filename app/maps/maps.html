@@ -1,6 +1,49 @@
-{{ vm.message }}
+<style>
+    .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
 
-<br/>
-<br/>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding-left: 25px;
+        padding-right: 25px;
+        text-align: center;
+    }
+</style>
 
-<div id="map"></div>
+<h1>
+    {{ vm.message }}
+</h1>
+<div class="content">
+    <div id="map"></div>
+</div>
+<div class="content">
+    <table id="mytable">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>User Name</th>
+            <th>Select</th>
+            <th>Simulate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in vm.users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>
+                <button ng-click="vm.getTracks(vm.id)">Select</button>
+            </td>
+            <td>
+                <button ng-click="vm.simulate(vm.id)">Simulate</button>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
