@@ -10,16 +10,11 @@ $conn = null;
 include "config.php";
 
 // Router
-if(isset($_POST['method'])){
-    // For backend
-    switch ($_POST['method']){
+if(isset($_REQUEST['method'])){
+    switch ($_REQUEST['method']){
         case 'CREATE_TRACK':
             insertNewTrack();
             break;
-    }
-}elseif (isset($_REQUEST['method'])){
-    // for angular
-    switch ($_REQUEST['method']){
         case 'GET_USERS':
             echo json_encode(getUsers());
             break;
