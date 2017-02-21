@@ -22,28 +22,32 @@
 <div class="content">
     <div id="map"></div>
 </div>
+Usuario Seleccionado: {{ vm.userSelect.id }}
 <div class="content">
     <table id="mytable">
         <thead>
         <tr>
             <th>Id</th>
             <th>User Name</th>
-            <th>Select</th>
+            <th>Init</th>
             <th>Simulate</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="user in vm.users">
+        <tr ng-repeat="user in vm.users" ng-if="vm.supportWorkers">
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
             <td>
-                <button ng-click="vm.getTracks(vm.id)">Select</button>
+                <button ng-click="vm.getTracks(user.id)">Init</button>
             </td>
             <td>
-                <button ng-click="vm.simulate(vm.id)">Simulate</button>
+                <button ng-click="vm.simulate(user.id)">Simulate</button>
             </td>
         </tr>
         </tbody>
-
     </table>
+</div>
+<div class="content" ng-if="!vm.supportWorkers" style="font-size: x-large">
+    Your browser doesn't support Web Workers :-(<br/>
+    Use another browser!
 </div>
