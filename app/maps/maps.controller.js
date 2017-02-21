@@ -113,6 +113,8 @@
             // Simulate in progress
             if (vm.tracks !== null) return;
 
+            GlobalVaribles.line.setLatLngs([]);
+
             if (vm.userSelect === null) {
                 // Select a new one
                 vm.userSelect = {
