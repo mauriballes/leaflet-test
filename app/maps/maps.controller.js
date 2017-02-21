@@ -14,13 +14,15 @@
         vm.map = null;
         vm.users = [];
         vm.userSelect = null;
-        vm.tracks = [];
+        vm.tracks = null;
         vm.stopCodeReal = 0;
 
         vm.configMaps = configMaps;
         vm.getUsers = getUsers;
         vm.errorRequest = errorRequest;
         vm.getTracks = getTracks;
+        vm.simulate = simulate;
+
         vm.supportWorkers = window.Worker;
 
         GlobalVaribles.worker.onmessage = receiveDataWorker;
@@ -45,6 +47,11 @@
             GlobalVaribles.marker = new L.marker([-17.783290, -63.182126]);
             GlobalVaribles.marker.addTo(vm.map);
             GlobalVaribles.marker.setOpacity(0.0); // hidden
+            GlobalVaribles.marker.bindPopup("<b>Hello world!</b>");
+
+            // Setup Polyline
+            GlobalVaribles.line = new L.polyline([], {color: 'red'});
+            GlobalVaribles.line.addTo(vm.map);
         }
 
         function getUsers() {
@@ -96,12 +103,16 @@
 
             http(request).then(success, vm.errorRequest);
         }
-        
+
         function drawMarker() {
             GlobalVaribles.marker.setLatLng(vm.userSelect.track);
+            vm.map.setView(vm.userSelect.track, 15);
         }
 
         function getTracks(user_id) {
+            // Simulate in progress
+            if (vm.tracks !== null) return;
+
             if (vm.userSelect === null) {
                 // Select a new one
                 vm.userSelect = {
@@ -121,6 +132,55 @@
                 vm.userSelect.last_track_id = 0;
                 getLastTrack();
             }
+        }
+
+        function getMyPath(user_id) {
+            // Make request
+            var request = {
+                method: 'POST',
+                url: 'http://localhost:9000/requests.php',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                params: {
+                    method: 'GET_TRACK',
+                    user_id: user_id
+                }
+            };
+
+            var success = function (data, status, header, config) {
+                var res = data.data;
+                vm.tracks = res;
+                GlobalVaribles.marker.setOpacity(1.0);
+                simulation();
+            };
+
+            http(request).then(success, vm.errorRequest);
+        }
+
+        function simulation() {
+            var latLon = vm.tracks.shift();
+            GlobalVaribles.line.addLatLng([latLon.lat, latLon.lon]);
+            GlobalVaribles.marker.setLatLng([latLon.lat, latLon.lon]);
+            vm.map.setView([latLon.lat, latLon.lon], 20);
+            if (vm.tracks.length != 0)
+                setTimeout(simulation, 2000);
+            else
+                vm.tracks = null;
+        }
+
+        function simulate(user_id) {
+            // Stop realtime
+            if (vm.userSelect !== null)
+                getTracks(vm.userSelect.id);
+
+            // Simulate in progress
+            if (vm.tracks !== null) return;
+
+            vm.tracks = [];
+            GlobalVaribles.line.setLatLngs([]);
+
+            getMyPath(user_id);
         }
 
         function receiveDataWorker(e) {

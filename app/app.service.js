@@ -16,7 +16,8 @@
 
         return {
             marker: null,
-            worker: myWorker
+            worker: myWorker,
+            line: null
         }
     }
 })(window);

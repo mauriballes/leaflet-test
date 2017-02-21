@@ -21,6 +21,9 @@ if(isset($_REQUEST['method'])){
         case 'GET_LAST_TRACK':
             echo json_encode(getLastTrack($_REQUEST['user_id']));
             break;
+        case 'GET_TRACK':
+            echo json_encode(getTrack($_REQUEST['user_id']));
+            break;
     }
 }
 
@@ -50,6 +53,18 @@ function getLastTrack($user_id){
     global $conn;
 
     $stmt = $conn->prepare('SELECT * FROM maps_test.track WHERE user_id=:user_id ORDER BY id DESC LIMIT 1');
+    $stmt->execute([
+        ':user_id' => $user_id
+    ]);
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $results;
+}
+
+function getTrack($user_id){
+    global $conn;
+
+    $stmt = $conn->prepare('SELECT * FROM maps_test.track WHERE user_id=:user_id');
     $stmt->execute([
         ':user_id' => $user_id
     ]);
