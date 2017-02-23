@@ -48,7 +48,7 @@ Una vez hecho esto podras testear tambien el backend
 ## NOTA
 
 ```
-Primero debes iniciar el backend y luego el frontend, sino habra conflicto con el frontend, recuerda que
-tambien debes contar con conexion a internet usar el backend ya que utiliza librarias como jQuery que 
-utilizan CDN, por tanto asegurate de contar con Internet.
+Primero debes iniciar el backend y luego el frontend, sino habra conflicto con el frontend, recuerda
+que tambien debes contar con conexion a internet usar el backend ya que utiliza librarias como jQuery
+que utilizan CDN, por tanto asegurate de contar con Internet.
 ```
